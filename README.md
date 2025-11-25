@@ -13,7 +13,7 @@ This project explores whether AI can reconstruct complex 3D furniture structures
 **Product:** BestPet 70in Cat Tree Tower, Dark Gray  
 **Source:** [Walmart Product Page](https://www.walmart.com/ip/BestPet-70in-Cat-Tree-Tower-Dark-Gray-w-Scratch-Posts-House-Funny-Toys/2052331762)
 
-**Why this product?** Cat trees present an interesting challenge for text-to-image generation:
+**Product choice** Cat trees present an interesting challenge for text-to-image generation:
 - Multi-level platforms with spatial relationships
 - Varied textures (plush, sisal, carpet)
 - Specific design elements (scratching posts, hanging toys, enclosed houses)
@@ -43,9 +43,10 @@ embeddings = model.encode(reviews)
 kmeans = KMeans(n_clusters=15)
 ```
 
-This wasn't for filtering — just to visualize the semantic structure of reviews across 15 topic clusters.
+This was to visualize the semantic structure of reviews across 15 topic clusters.
+<img width="1064" height="442" alt="cattree_reviews_clustering" src="https://github.com/user-attachments/assets/cb2b7c2f-2200-449e-bb32-45b7fe751e87" />
 
-![Cluster Visualization](generated_images/cluster_visualization.png)
+
 
 ### 3. LLM Feature Extraction (GPT-4o)
 Fed all 730 reviews to GPT-4o to extract visual features in JSON format:
@@ -64,7 +65,7 @@ Fed all 730 reviews to GPT-4o to extract visual features in JSON format:
 | Prompt | Description |
 |--------|-------------|
 | `review_based` | Raw LLM output (includes negative words) |
-| `positive_extracted` | Prompted LLM to extract only positive features (still had "wobbly" 😅) |
+| `positive_extracted` | Prompted LLM to extract only positive features (still had "wobbly") |
 | `ideal_manual` | Manually curated prompt with only positive visual descriptors |
 
 ### 5. Image Generation
@@ -73,10 +74,12 @@ Generated images using both **DALL-E 3** and **Stable Diffusion XL** with each o
 ## Results
 
 ### DALL-E 3
-![DALL-E 3 Comparison](generated_images/dalle3_comparison.png)
+<img width="1042" height="370" alt="dalle_cattree" src="https://github.com/user-attachments/assets/95bea857-55f9-4d14-b789-67c0ff02a7f6" />
+
 
 ### Stable Diffusion XL
-![Stable Diffusion Comparison](generated_images/sd_comparison.png)
+<img width="1040" height="364" alt="sd_cattree" src="https://github.com/user-attachments/assets/847ff412-94ba-4ea3-b682-9c288ad46891" />
+
 
 ## Observations
 
@@ -88,22 +91,7 @@ Generated images using both **DALL-E 3** and **Stable Diffusion XL** with each o
 
 4. **LLM is too "honest"** — When analyzing mixed reviews, GPT-4 faithfully extracts both positive and negative features. For marketing/product visualization use cases, explicit prompt engineering to filter sentiment is necessary.
 
-## File Structure
 
-```
-├── cat_tree_reviews.csv              # Raw scraped data
-├── cat_tree_reviews_cleaned.csv      # Processed reviews only
-├── cat_tree_extracted_features.json  # LLM extracted features
-├── generated_images/
-│   ├── dalle3_review_based.png
-│   ├── dalle3_positive_extracted.png
-│   ├── dalle3_ideal_manual.png
-│   ├── sd_review_based.png
-│   ├── sd_positive_extracted.png
-│   ├── sd_ideal_manual.png
-│   ├── dalle3_comparison.png
-│   └── sd_comparison.png
-└── cat_tree_reviews_to_images.ipynb  # Full notebook
 ```
 
 ## Tech Stack
