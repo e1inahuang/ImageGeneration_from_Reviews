@@ -118,3 +118,41 @@ Generated images using both **DALL-E 3** and **Stable Diffusion XL** with each o
 > A 70-inch tall multi-tiered cat tree tower in dark gray plush fabric, featuring 5-6 spacious platforms at different heights, sisal-wrapped scratching posts, two cozy enclosed cat condos with circular entrances, soft carpeted perches, hanging pom-pom toys, sturdy wide base for stability, set against a clean white background, product photography style, high quality, detailed textures
 
 </details>
+
+
+
+
+
+
+# Image Generation Agentic Workflow
+
+This repository implements an end-to-end agentic workflow that converts raw customer reviews into structured visual prompts and final product images.
+It includes these stages:
+	1.	IngestionAgent – load & clean CSV
+	2.	EmbeddingAgent – compute MiniLM embeddings
+	3.	ClusteringAgent – (optional) cluster reviews
+	4.	RAGStoreAgent – build FAISS vector store
+	5.	RetrievalAgent – retrieve visual/positive/negative review corpora
+	6.	PromptAgent – LLM → JSON feature extraction + image prompts
+	7.	ImageAgent – image generation (DALL-E / Stable Diffusion / Google Imagen)
+	8.	run_workflow() – orchestrates the entire pipeline
+
+⸻
+
+🚀 Quick Start
+
+1. Install Dependencies
+
+pip install -r requirements.txt
+
+Make sure you have:
+	•	openai
+	•	google-genai
+	•	sentence-transformers
+	•	faiss-cpu
+	•	matplotlib
+	•	pandas
+	•	tqdm
+	•	python-dotenv
+
+⸻
