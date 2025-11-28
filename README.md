@@ -92,7 +92,6 @@ Generated images using both **DALL-E 3** and **Stable Diffusion XL** with each o
 4. **LLM is too "honest"** — When analyzing mixed reviews, GPT-4 faithfully extracts both positive and negative features. For marketing/product visualization use cases, explicit prompt engineering to filter sentiment is necessary.
 
 
-```
 
 ## Tech Stack
 
