@@ -124,7 +124,7 @@ Generated images using both **DALL-E 3** and **Stable Diffusion XL** with each o
 
 
 
-# Image Generation Agentic Workflow
+# GenAI Product Review → Image Generation Agentic Workflow
 
 This repository implements an end-to-end agentic workflow that converts raw customer reviews into structured visual prompts and final product images.
 It includes these stages:
@@ -154,5 +154,229 @@ Make sure you have:
 	•	pandas
 	•	tqdm
 	•	python-dotenv
+
+⸻
+
+🔑 2. Configure API Keys
+
+Create a .env file in the project root:
+
+OPENAI_API_KEY=your_openai_key_here
+STABILITY_API_KEY=your_stability_key_here   # for Stable Diffusion
+GOOGLE_API_KEY=your_google_genai_key_here  # for Google Imagen / Nano Banana
+
+Load them inside notebooks:
+
+from dotenv import load_dotenv
+load_dotenv()
+
+On macOS/Linux, you can also export:
+
+export OPENAI_API_KEY=...
+export STABILITY_API_KEY=...
+export GOOGLE_API_KEY=...
+
+
+⸻
+
+📄 3. Prepare Your CSV File
+
+Your CSV must contain a single text column (default: "review").
+
+Example:
+
+review
+"I love this product..."
+"The lid broke after 3 uses..."
+
+If your column name is different (e.g., "text"), you can override using:
+
+run_workflow(..., text_col="text")
+
+
+⸻
+
+🛠 4. Set the Product Name
+
+You can pass the product name directly to the workflow:
+
+results = run_workflow(
+    csv_path="walmart.csv",
+    output_root="./outputs/my_run",
+    product_name="Dash Rapid Egg Cooker",
+)
+
+If you are calling from command line, use --product_name (if enabled):
+
+python pipeline.py --csv walmart.csv --out outputs --product_name "Dash Rapid Egg Cooker"
+
+The product name will be injected into:
+	•	RetrievalAgent queries
+	•	PromptAgent’s feature extraction prompts
+	•	Final image generation prompts
+
+⸻
+
+🧪 5. Choose Sampling Mode
+
+The workflow offers three ways to choose ~800 reviews for prompt generation:
+
+sampling_mode="rag" (Recommended)
+
+Retrieves reviews by semantic queries:
+	•	visual structure
+	•	materials
+	•	functional structure
+	•	positive appearance
+	•	negative appearance
+
+→ Best accuracy, least noise.
+
+sampling_mode="cluster"
+
+Samples evenly across KMeans clusters.
+
+sampling_mode="random"
+
+Random 800 reviews.
+
+Set it like this:
+
+run_workflow(..., sampling_mode="rag")
+
+
+⸻
+
+🎨 6. Choose Image Generation Model
+
+The workflow supports 3 image models:
+
+Model	Flag	API
+DALL-E 3	"dalle3" / "dalle"	OpenAI
+Stable Diffusion XL	"sd"	Stability AI
+Google Imagen 4.0 (Nano Banana)	"imagen"	Google GenAI
+
+Choose like this:
+
+run_workflow(
+    ...,
+    image_model="dalle",   # or: "sd" / "nano"
+)
+
+Generated images go into automatically separated folders:
+
+outputs/egg_run/images_dalle3_rag/
+outputs/egg_run/images_sd_cluster/
+outputs/egg_run/images_imagen_random/
+
+
+⸻
+
+🧩 7. Modifying the Prompt Templates
+
+Prompt templates are defined at the top of pipeline.py:
+
+feature_prompt_template = """
+...
+{PRODUCT_NAME}
+{FULL_TEXT}
+{EXAMPLES}
+{COUNT}
+...
+"""
+
+And:
+
+posneg_prompt_template = """
+...
+{PRODUCT_NAME}
+{POS_FULL}
+{NEG_FULL}
+...
+"""
+
+Guidelines for Modifying Prompt Templates
+
+✔ Keep placeholders ({FULL_TEXT}, {PRODUCT_NAME}, etc.)
+✔ Escape JSON braces using {{ and }}
+✔ Make sure the final output must remain valid JSON
+
+Example: Adding new fields
+
+You can simply extend the JSON template:
+
+"lighting_conditions": "any descriptions related to reflections, gloss, shine"
+
+
+⸻
+
+📦 8. Running the Workflow
+
+From Python Notebook:
+
+from pipeline import run_workflow
+
+results = run_workflow(
+    csv_path="walmart.csv",
+    output_root="./outputs/egg_run",
+    product_name="Dash Rapid Egg Cooker",
+    sampling_mode="rag",
+    image_model="dalle3",
+)
+
+From Command Line:
+
+python pipeline.py \
+    --csv walmart.csv \
+    --out ./outputs/egg_run \
+    --image_model dalle3 \
+    --sampling_mode rag \
+    --product_name "Dash Rapid Egg Cooker"
+
+
+⸻
+
+📁 9. Workflow Output Structure
+
+Example folder:
+
+outputs/egg_run/
+  artifacts/
+    embeddings.npy
+    reviews_with_clusters.csv
+  images_dalle3_rag/
+    dalle3_feature_based.png
+    dalle3_ideal_from_pos.png
+    dalle3_realistic_from_pos_neg.png
+    dalle3_comparison.png
+  prompts/
+    feature_summary.json
+    posneg_summary.json
+
+
+⸻
+
+🧠 10. Agentic Workflow Diagram (for report)
+
+           CSV
+            │
+            ▼
+     IngestionAgent
+            │
+            ▼
+     EmbeddingAgent ───► FAISS Vector Store (RAGStoreAgent)
+            │                     │
+            │                     ▼
+            ▼               RetrievalAgent
+     ClusteringAgent            │
+            │                   ▼
+            └────────────► PromptAgent
+                                │
+                                ▼
+                           ImageAgent
+                                │
+                                ▼
+                         Generated Images
+
 
 ⸻
