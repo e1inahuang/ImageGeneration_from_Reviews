@@ -275,7 +275,6 @@ messy condensation, scratches, dents, color mismatch.
 <img width="5370" height="1416" alt="gimg_comparison" src="https://github.com/user-attachments/assets/79f4e5ea-82e0-41d9-8d2f-f9b7d0cbdb07" />
 
 
-
 # Bike Helmet Reviews to Image Generation
 
 Generate product images from customer review text using LLM analysis and diffusion models.
@@ -358,17 +357,26 @@ We generated images using two local diffusion models to compare performance:
 ### Scenario 1: Voice of Customer (Review-Based)
 **Stable Diffusion v1.5** vs **OpenJourney**
 
-<img width="400" alt="Scenario 1 - Stable Diffusion v1.5" src="q3_generated_images/model1_sd15_p1_reviews.png" /> <img width="400" alt="Scenario 1 - OpenJourney" src="q3_generated_images/model2_openjourney_p1_reviews.png" />
+<p float="left">
+  <img src="q3_generated_images/model1_sd15_p1_reviews.png" width="45%" />
+  <img src="q3_generated_images/model2_openjourney_p1_reviews.png" width="45%" /> 
+</p>
 
 ### Scenario 2: Official Specs
 **Stable Diffusion v1.5** vs **OpenJourney**
 
-<img width="400" alt="Scenario 2 - Stable Diffusion v1.5" src="q3_generated_images/model1_sd15_p2_specs.png" /> <img width="400" alt="Scenario 2 - OpenJourney" src="q3_generated_images/model2_openjourney_p2_specs.png" />
+<p float="left">
+  <img src="q3_generated_images/model1_sd15_p2_specs.png" width="45%" />
+  <img src="q3_generated_images/model2_openjourney_p2_specs.png" width="45%" /> 
+</p>
 
 ### Scenario 3: Lifestyle Action
 **Stable Diffusion v1.5** vs **OpenJourney**
 
-<img width="400" alt="Scenario 3 - Stable Diffusion v1.5" src="q3_generated_images/model1_sd15_p3_action.png" /> <img width="400" alt="Scenario 3 - OpenJourney" src="q3_generated_images/model2_openjourney_p3_action.png" />
+<p float="left">
+  <img src="q3_generated_images/model1_sd15_p3_action.png" width="45%" />
+  <img src="q3_generated_images/model2_openjourney_p3_action.png" width="45%" /> 
+</p>
 
 ## Observations
 
