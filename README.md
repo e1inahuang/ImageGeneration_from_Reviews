@@ -275,6 +275,102 @@ messy condensation, scratches, dents, color mismatch.
 <img width="5370" height="1416" alt="gimg_comparison" src="https://github.com/user-attachments/assets/79f4e5ea-82e0-41d9-8d2f-f9b7d0cbdb07" />
 
 
+# Bike Helmet Reviews to Image Generation
+
+Generate product images from customer review text using LLM analysis and diffusion models.
+
+## Overview
+
+This project analyzes **582 customer reviews** for the **VICTGOAL Bike Helmet** to extract visual features and generate product visualizations. The pipeline involves: **cleaning reviews → embedding & clustering → LLM feature extraction → image generation with Stable Diffusion & OpenJourney**.
+
+## Product Selection
+
+**Product:** VICTGOAL Bike Helmet with Visor and Goggles  
+**Source:** Online Retailer (Amazon/Walmart)
+
+**Product choice:** This product offers a mix of functional safety features and aesthetic preferences, making it an ideal candidate for text-to-image generation testing:
+- **Visual Tech:** Features complex components like magnetic detachable goggles and a rear USB rechargeable LED light.
+- **Design:** Described by users as "Futuristic," "Robocop-like," and "Aerodynamic."
+- **Materials:** A mix of matte finish polycarbonate (PC) shell and EPS foam.
+- **Challenge:** Can the AI correctly visualize the "magnetic" attachment mechanism and the specific positioning of the rear light based solely on text?
+
+## Data Collection
+
+- **Scope:** 582 customer reviews.
+- **Processing:** Extracted the `tl-m` (review text) column. Removed metadata (ratings, dates, usernames) to focus purely on semantic content.
+- **Total Volume:** ~115k characters (~29k tokens), requiring strategic sampling for the LLM context window.
+
+## Methodology
+
+### 1. Preprocessing & Embedding
+- **Cleaning:** Removed NaN values and short/empty reviews.
+- **Embedding:** Used `SentenceTransformer('all-MiniLM-L6-v2')` to convert reviews into 384-dimensional vectors.
+
+### 2. Clustering & Topic Modeling
+- Applied **K-Means Clustering** (k=8) to segment reviews into distinct topics.
+- **Key Clusters Identified:**
+    - *Cluster 0:* General safety & light features.
+    - *Cluster 3:* Visor and Goggles specific feedback.
+    - *Cluster 6:* Fit, comfort, and sizing adjustments.
+- **Visualization:** Generated a bar chart distribution to identify the most discussed aspects (Visuals vs. Functionality).
+
+### 3. LLM Feature Extraction (GPT-4o)
+- **RAG Retrieval:** Used FAISS to retrieve the top 500 reviews most relevant to "visual appearance," "materials," and "design."
+- **Structured Extraction:** Prompted GPT-4o to analyze these reviews and output a strict JSON structure:
+
+```json
+{
+  "design": { "overall_style": "...", "shape": "..." },
+  "materials": { "shell": "...", "foam": "..." },
+  "key_features": { 
+      "visor": "magnetic detachable...", 
+      "light": "USB rechargeable rear LED..." 
+  },
+  "image_prompt": "A single detailed paragraph..."
+}
+```
+
+### 4. Prompt Engineering strategy
+We experimented with 3 distinct prompt types to test how different data sources affect image generation quality:
+
+<details>
+<summary>Click to expand full prompts</summary>
+
+**1. Voice of Customer (Review-Based):**
+> "A high-quality, professional product shot of a modern cycling helmet in matte black with electric blue accents. The helmet features a futuristic design with a magnetic dark-tinted eye shield (goggles) attached to the front. On the back, there is a glowing red LED safety light. The helmet has a streamlined shape with multiple ventilation holes for airflow. It sits on a clean, neutral studio background with soft lighting to highlight the sleek texture and the reflection on the magnetic goggles."
+
+**2. Official Specs (Description-Based):**
+> "A VICTGOAL bike helmet with detachable magnetic goggles and a removable sun visor. The helmet is dual-tone fluorescent yellow and black, emphasizing high visibility and safety. It features a rechargeable USB LED light on the rear with 3 lighting modes. The design includes 21 breathable vents for cooling. Shown in a dynamic outdoor setting, resting on a park bench with a blurred bicycle in the background."
+
+**3. Lifestyle/Action (Creative):**
+> "Cinematic action shot of a cyclist wearing a sleek white VICTGOAL helmet with a magnetic grey visor. The cyclist is riding through a city street at twilight. The rear red LED light on the helmet is illuminated and glowing brightly. The image has a shallow depth of field, focusing on the helmet's aerodynamic shape and the reflection of city lights on the visor. High resolution, photorealistic."
+
+</details>
+
+### 5. Image Generation Models
+We generated images using two local diffusion models to compare performance:
+1.  **Stable Diffusion v1.5:** A reliable baseline model known for good general adherence.
+2.  **OpenJourney (prompthero/openjourney):** A fine-tuned model trained on Midjourney images, chosen to test if it could capture the "futuristic" aesthetic better.
+
+## Results & Observations
+
+### 1. Aesthetic Capture
+The **"Review-Based" prompt** (derived from Q2 analysis) successfully captured the "futuristic" and "Robocop-like" look that users praised. This suggests that user reviews often contain more evocative visual descriptors ("sleek," "aggressive") than standard product descriptions.
+
+### 2. Model Comparison: SD v1.5 vs. OpenJourney
+- **Stable Diffusion v1.5** produced safer, flatter images that looked like standard e-commerce stock photos. It adhered well to the prompt but lacked "drama."
+- **OpenJourney** produced significantly better lighting, contrast, and composition, especially for the "Action" shot. It successfully rendered the "glowing red light" with a cinematic bloom effect that SD v1.5 missed.
+
+### 3. Feature Visualization (Zero-Shot)
+Both models successfully visualized the **"magnetic goggles"** concept—placing a tinted shield over the eyes—without ever having seen the specific product image. This confirms that the extracted text description was rich enough to guide the model's latent knowledge of what "magnetic goggles" should look like.
+
+*(Generated images are stored in `q3_generated_images/`)*
+
+
+
+
+
+
 # GenAI Product Review → Image Generation Agentic Workflow
 
 This repository implements an end-to-end agentic workflow that converts raw customer reviews into structured visual prompts and final product images.
