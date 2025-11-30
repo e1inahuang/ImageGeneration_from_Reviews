@@ -361,24 +361,24 @@ We generated images using two local diffusion models to compare performance:
 **Stable Diffusion v1.5** vs **OpenJourney**
 
 <p float="left">
-  <img src="q3_generated_images/model1_sd15_p1_reviews.png" width="45%" />
-  <img src="q3_generated_images/model2_openjourney_p1_reviews.png" width="45%" /> 
+  <img src="helmet_analysis/q3_generated_images/model1_sd15_p1_reviews.png" width="45%" />
+  <img src="helmet_analysis/q3_generated_images/model2_openjourney_p1_reviews.png" width="45%" /> 
 </p>
 
 ### Scenario 2: Official Specs
 **Stable Diffusion v1.5** vs **OpenJourney**
 
 <p float="left">
-  <img src="q3_generated_images/model1_sd15_p2_specs.png" width="45%" />
-  <img src="q3_generated_images/model2_openjourney_p2_specs.png" width="45%" /> 
+  <img src="helmet_analysis/q3_generated_images/model1_sd15_p2_specs.png" width="45%" />
+  <img src="helmet_analysis/q3_generated_images/model2_openjourney_p2_specs.png" width="45%" /> 
 </p>
 
 ### Scenario 3: Lifestyle Action
 **Stable Diffusion v1.5** vs **OpenJourney**
 
 <p float="left">
-  <img src="q3_generated_images/model1_sd15_p3_action.png" width="45%" />
-  <img src="q3_generated_images/model2_openjourney_p3_action.png" width="45%" /> 
+  <img src="helmet_analysis/q3_generated_images/model1_sd15_p3_action.png" width="45%" />
+  <img src="helmet_analysis/q3_generated_images/model2_openjourney_p3_action.png" width="45%" /> 
 </p>
 
 ## Observations
