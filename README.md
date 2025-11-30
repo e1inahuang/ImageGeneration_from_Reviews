@@ -314,7 +314,7 @@ This project analyzes **582 customer reviews** for the **VICTGOAL Bike Helmet** 
     - *Cluster 6:* Fit, comfort, and sizing adjustments.
 - **Visualization:** Generated a bar chart distribution to identify the most discussed aspects (Visuals vs. Functionality).
 
-![Cluster Distribution](q3_generated_images/cluster_distribution.png)
+![Cluster Distribution](helmet_analysis/q3_generated_images/cluster_distribution.png)
 
 
 ### 3. LLM Feature Extraction (GPT-4o)
