@@ -314,6 +314,9 @@ This project analyzes **582 customer reviews** for the **VICTGOAL Bike Helmet** 
     - *Cluster 6:* Fit, comfort, and sizing adjustments.
 - **Visualization:** Generated a bar chart distribution to identify the most discussed aspects (Visuals vs. Functionality).
 
+![Cluster Distribution](q3_generated_images/cluster_distribution.png)
+
+
 ### 3. LLM Feature Extraction (GPT-4o)
 - **RAG Retrieval:** Used FAISS to retrieve the top 500 reviews most relevant to "visual appearance," "materials," and "design."
 - **Structured Extraction:** Prompted GPT-4o to analyze these reviews and output a strict JSON structure:
