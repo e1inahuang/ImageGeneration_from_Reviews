@@ -352,7 +352,33 @@ We generated images using two local diffusion models to compare performance:
 1.  **Stable Diffusion v1.5:** A reliable baseline model known for good general adherence.
 2.  **OpenJourney (prompthero/openjourney):** A fine-tuned model trained on Midjourney images, chosen to test if it could capture the "futuristic" aesthetic better.
 
-## Results & Observations
+## Results
+
+### Scenario 1: Voice of Customer (Review-Based)
+**Stable Diffusion v1.5** vs **OpenJourney**
+
+<p float="left">
+  <img src="q3_generated_images/model1_sd15_p1_reviews.png" width="45%" />
+  <img src="q3_generated_images/model2_openjourney_p1_reviews.png" width="45%" /> 
+</p>
+
+### Scenario 2: Official Specs
+**Stable Diffusion v1.5** vs **OpenJourney**
+
+<p float="left">
+  <img src="q3_generated_images/model1_sd15_p2_specs.png" width="45%" />
+  <img src="q3_generated_images/model2_openjourney_p2_specs.png" width="45%" /> 
+</p>
+
+### Scenario 3: Lifestyle Action
+**Stable Diffusion v1.5** vs **OpenJourney**
+
+<p float="left">
+  <img src="q3_generated_images/model1_sd15_p3_action.png" width="45%" />
+  <img src="q3_generated_images/model2_openjourney_p3_action.png" width="45%" /> 
+</p>
+
+## Observations
 
 ### 1. Aesthetic Capture
 The **"Review-Based" prompt** (derived from Q2 analysis) successfully captured the "futuristic" and "Robocop-like" look that users praised. This suggests that user reviews often contain more evocative visual descriptors ("sleek," "aggressive") than standard product descriptions.
@@ -365,9 +391,6 @@ The **"Review-Based" prompt** (derived from Q2 analysis) successfully captured t
 Both models successfully visualized the **"magnetic goggles"** concept—placing a tinted shield over the eyes—without ever having seen the specific product image. This confirms that the extracted text description was rich enough to guide the model's latent knowledge of what "magnetic goggles" should look like.
 
 *(Generated images are stored in `q3_generated_images/`)*
-
-
-
 
 
 
